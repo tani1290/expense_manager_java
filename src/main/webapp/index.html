@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Manager | Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Material Design Variables */
+        :root {
+            --primary-color: #4285F4;
+            --primary-dark: #3367D6;
+            --primary-light: #E8F0FE;
+            --secondary-color: #34A853;
+            --accent-color: #FBBC05;
+            --warn-color: #EA4335;
+            --text-primary: #202124;
+            --text-secondary: #5F6368;
+            --divider-color: #DADCE0;
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --shadow-1: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --shadow-2: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .welcome-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .welcome-message {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-2);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-message::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-1);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .feature-card:nth-child(2) {
+            border-top-color: var(--secondary-color);
+        }
+        
+        .feature-card:nth-child(3) {
+            border-top-color: var(--accent-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .feature-card:nth-child(2) .feature-icon {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .feature-card:nth-child(3) .feature-icon {
+            background-color: rgba(251, 188, 5, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .redirect-message {
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+        }
+        
+        .redirect-message p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .btn-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 1px 2px rgba(66, 133, 244, 0.3);
+        }
+        
+        .btn-link:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 2px 4px rgba(66, 133, 244, 0.3);
+            text-decoration: none;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(66, 133, 244, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin-top: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome-container {
+                margin: 2rem auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="welcome-message">
+            <h1>Welcome to Expense Manager</h1>
+            <p class="subtitle">Your personal finance companion</p>
+            <p>Track, manage, and analyze your expenses effortlessly</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Expense Tracking</h3>
+                <p>Record and categorize your daily expenses with our intuitive interface</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Monthly Reports</h3>
+                <p>Get detailed visual insights into your spending patterns and trends</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Storage</h3>
+                <p>Your financial data is protected with industry-standard security</p>
+            </div>
+        </div>
+        
+        <div class="redirect-message">
+            <p>You'll be redirected to the login page in a moment...</p>
+            <p>If not, <a href="login" class="btn-link">Continue to Login</a></p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Redirect to login page after 5 seconds
+        setTimeout(function() {
+            window.location.href = "login";
+        }, 5000);
+    </script>
+</body>
+</html>

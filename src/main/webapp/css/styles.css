@@ -1,0 +1,871 @@
+/* =========================================================
+   Modern Expense Manager CSS - Material Design Inspired
+   - Google-inspired color palette and design language
+   - Enhanced readability and spacious layouts
+   - Fully responsive with improved table displays
+   ========================================================= */
+
+/* =========================
+   Material Design Variables
+   ========================= */
+:root {
+  /* Primary Google Blue */
+  --primary-color: #4285F4;
+  --primary-dark: #3367D6;
+  --primary-light: #E8F0FE;
+  
+  /* Secondary Colors */
+  --secondary-color: #34A853; /* Google Green */
+  --accent-color: #FBBC05;   /* Google Yellow */
+  --warn-color: #EA4335;     /* Google Red */
+  
+  /* Neutral Palette */
+  --text-primary: #202124;   /* Google Gray 900 */
+  --text-secondary: #5F6368; /* Google Gray 700 */
+  --divider-color: #DADCE0;  /* Google Gray 300 */
+  --bg-color: #F8F9FA;       /* Light background */
+  --card-bg: #FFFFFF;
+  --surface-color: #FFFFFF;
+  
+  /* Elevation */
+  --shadow-1: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+  --shadow-2: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+  --shadow-3: 0 2px 6px 2px rgba(60,64,67,0.15), 0 1px 2px 0 rgba(60,64,67,0.3);
+  
+  /* Animation */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --ripple-animation: ripple 0.6s linear;
+}
+
+/* =========================
+   Base Styles & Reset
+   ========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-primary);
+  margin: 1.25rem 0 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--divider-color);
+  padding-bottom: 0.5rem;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover,
+a:focus {
+  color: var(--primary-dark);
+  text-decoration: underline;
+  outline: none;
+}
+
+/* =========================
+   Layout Components
+   ========================= */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Enhanced table container for expenses */
+.expenses-table-container {
+  max-width: 100%;
+  margin: 2rem auto;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  overflow-x: auto;
+}
+
+/* Report page layout */
+.report-container {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.report-sidebar {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  height: fit-content;
+}
+
+.report-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* =========================
+   Tables (Material Design Style)
+   ========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+th {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: rgba(66, 133, 244, 0.04);
+}
+
+/* Specific column widths for expenses table */
+.expenses-table th:nth-child(1), 
+.expenses-table td:nth-child(1) { /* Date */
+  width: 15%;
+  min-width: 120px;
+}
+
+.expenses-table th:nth-child(2), 
+.expenses-table td:nth-child(2) { /* Category */
+  width: 20%;
+  min-width: 150px;
+}
+
+.expenses-table th:nth-child(3), 
+.expenses-table td:nth-child(3) { /* Amount */
+  width: 15%;
+  min-width: 100px;
+  font-family: 'Roboto Mono', monospace;
+  color: var(--text-secondary);
+}
+
+.expenses-table th:nth-child(4), 
+.expenses-table td:nth-child(4) { /* Description */
+  width: 50%;
+  min-width: 300px;
+  white-space: normal;
+}
+
+/* Report table specific styles */
+.report-table th, 
+.report-table td {
+  padding: 1rem;
+}
+
+.report-table th {
+  background-color: var(--primary-light);
+}
+
+/* =========================
+   Buttons & Actions
+   ========================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 1px 3px 1px rgba(66, 133, 244, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  box-shadow: 0 1px 2px 0 rgba(52, 168, 83, 0.3);
+}
+
+.btn-secondary:hover {
+  background: #2d8e47;
+  box-shadow: 0 1px 3px 1px rgba(52, 168, 83, 0.3);
+}
+
+.btn-warn {
+  background: var(--warn-color);
+  box-shadow: 0 1px 2px 0 rgba(234, 67, 53, 0.3);
+}
+
+.btn-warn:hover {
+  background: #d33426;
+  box-shadow: 0 1px 3px 1px rgba(234, 67, 53, 0.3);
+}
+
+.btn-link {
+  color: var(--primary-color);
+  background: transparent;
+  box-shadow: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.btn-link:hover {
+  background: rgba(66, 133, 244, 0.08);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: scale(0);
+  animation: var(--ripple-animation);
+  pointer-events: none;
+}
+
+/* =========================
+   Form Elements
+   ========================= */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="month"],
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--divider-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: var(--surface-color);
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+/* =========================
+   Cards & Summary Widgets
+   ========================= */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-2);
+}
+
+.card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.card p {
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--primary-color);
+}
+
+/* Chart containers */
+.chart-container {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 1.5rem;
+}
+
+/* =========================
+   Filter Bar
+   ========================= */
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filter-bar > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* =========================
+   Navigation & Sidebar
+   ========================= */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-nav a {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(66, 133, 244, 0.08);
+  color: var(--primary-color);
+}
+
+.sidebar-nav a.active {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: 500;
+}
+
+/* =========================
+   Animations
+   ========================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   Utility Classes
+   ========================= */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.p-2 { padding: 1rem; }
+
+/* =========================
+   Responsive Design
+   ========================= */
+@media (max-width: 1024px) {
+  .report-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .report-sidebar {
+    order: -1;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container, .expenses-table-container {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+  
+  .filter-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .filter-bar > * {
+    width: 100%;
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+}
+/* Report Page Specific Styles */
+.report-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-2);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.report-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.report-month {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.inline-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.category-breakdown {
+    margin: 2rem 0;
+}
+
+.category-breakdown h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-1);
+}
+
+.category-table th, 
+.category-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.category-table th {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+.category-table tr:last-child td {
+    border-bottom: none;
+}
+
+.category-table tr:hover td {
+    background-color: rgba(66, 133, 244, 0.04);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+/* Login Page Styles */
+.login-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-2);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.error {
+    color: var(--warn-color);
+    background: rgba(234, 67, 53, 0.1);
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.success {
+    color: var(--secondary-color);
+    background: rgba(52, 168, 83, 0.1);
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  table {
+    font-size: 0.9rem;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+  }
+  
+  .expenses-table th:nth-child(1), 
+  .expenses-table td:nth-child(1),
+  .expenses-table th:nth-child(2), 
+  .expenses-table td:nth-child(2),
+  .expenses-table th:nth-child(3), 
+  .expenses-table td:nth-child(3),
+  .expenses-table th:nth-child(4), 
+  .expenses-table td:nth-child(4) {
+    width: auto;
+    min-width: 0;
+  }
+  
+  /* Stack table cells on mobile */
+  .mobile-stack td {
+    display: block;
+    width: 100% !important;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+  
+  
+  .mobile-stack td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: calc(50% - 1rem);
+    padding-right: 1rem;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+}
+
+/* Enhanced Report Page Styles */
+.report-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-2);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.report-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.report-month {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0;
+    font-weight: 400;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.inline-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.summary-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+    text-align: center;
+}
+
+.summary-card h3 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.summary-card p {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.category-breakdown {
+    margin: 2rem 0;
+}
+
+.category-breakdown h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-1);
+}
+
+.category-table th, 
+.category-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.category-table th {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+.category-table tr:last-child td {
+    border-bottom: none;
+}
+
+.category-table tr:hover td {
+    background-color: rgba(66, 133, 244, 0.04);
+}
+
+.navigation-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider-color);
+}
+
+.nav-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    background-color: rgba(66, 133, 244, 0.08);
+    text-decoration: underline;
+}
+
+.nav-link.logout {
+    color: var(--warn-color);
+}
+
+.nav-link.logout:hover {
+    background-color: rgba(234, 67, 53, 0.08);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .report-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .action-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .inline-form {
+        width: 100%;
+    }
+    
+    .inline-form input[type="month"] {
+        flex-grow: 1;
+    }
+}
+.chart-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-container h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+canvas {
+    width: 100% !important;
+    height: 400px !important;
+}
+@media (max-width: 480px) {
+    .report-container {
+        padding: 1rem;
+    }
+    
+    .category-table {
+        font-size: 0.9rem;
+    }
+    
+    .category-table th, 
+    .category-table td {
+        padding: 0.75rem;
+    }
+}
