@@ -35,14 +35,14 @@ public class AddExpenseServlet extends HttpServlet {
         String description = req.getParameter("description");
 
         if (title == null || title.trim().isEmpty()) {
-            resp.sendRedirect(req.getContextPath() + "/addExpense.html?error=MissingTitle");
+            resp.sendRedirect(req.getContextPath() + "/addExpense.jsp?error=MissingTitle");
             return;
         }
 
         try {
             double amount = Double.parseDouble(amountStr);
             if (amount <= 0) {
-                resp.sendRedirect(req.getContextPath() + "/addExpense.html?error=InvalidAmount");
+                resp.sendRedirect(req.getContextPath() + "/addExpense.jsp?error=InvalidAmount");
                 return;
             }
             LocalDate date = LocalDate.parse(dateStr);
@@ -52,9 +52,9 @@ public class AddExpenseServlet extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() + "/viewExpenses?added=true");
         } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/addExpense.html?error=InvalidInput");
+            resp.sendRedirect(req.getContextPath() + "/addExpense.jsp?error=InvalidInput");
         } catch (IllegalArgumentException e) {
-            resp.sendRedirect(req.getContextPath() + "/addExpense.html?error=InvalidDate");
+            resp.sendRedirect(req.getContextPath() + "/addExpense.jsp?error=InvalidDate");
         }
     }
 }

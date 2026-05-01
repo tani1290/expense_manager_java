@@ -50,7 +50,7 @@
             <c:if test="${empty expenses}">
                 <div class="empty-state">
                     <p>No expenses found.</p>
-                    <a href="addExpense.html" class="btn mt-1">+ Add Expense</a>
+                    <a href="addExpense.jsp" class="btn mt-1">+ Add Expense</a>
                 </div>
             </c:if>
             <c:if test="${!empty expenses}">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="action-bar">
-            <a href="addExpense.html" class="btn">+ Add Expense</a>
+            <a href="addExpense.jsp" class="btn">+ Add Expense</a>
             <a href="report" class="btn btn-success">View Report</a>
             <a href="dashboard" class="btn btn-outline">Back to Dashboard</a>
         </div>

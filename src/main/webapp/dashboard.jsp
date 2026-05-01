@@ -88,7 +88,7 @@
                     Recent Expenses
                 </h2>
                 <c:if test="${empty recentExpenses}">
-                    <div class="empty-state">No expenses yet. <a href="addExpense.html">Add one</a> to get started!</div>
+                    <div class="empty-state">No expenses yet. <a href="addExpense.jsp">Add one</a> to get started!</div>
                 </c:if>
                 <c:if test="${!empty recentExpenses}">
                     <table>

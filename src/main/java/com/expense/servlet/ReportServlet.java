@@ -255,7 +255,7 @@ public class ReportServlet extends HttpServlet {
                 "    </button>" +
                 "    <ul class='navbar-nav'>" +
                 "        <li><a href='dashboard' class='nav-link" + ("dashboard".equals(activePage) ? " active" : "") + "'>Dashboard</a></li>" +
-                "        <li><a href='addExpense.html' class='nav-link" + ("addExpense".equals(activePage) ? " active" : "") + "'>Add Expense</a></li>" +
+                "        <li><a href='addExpense.jsp' class='nav-link" + ("addExpense".equals(activePage) ? " active" : "") + "'>Add Expense</a></li>" +
                 "        <li><a href='viewExpenses' class='nav-link" + ("viewExpenses".equals(activePage) ? " active" : "") + "'>Expenses</a></li>" +
                 "        <li><a href='report' class='nav-link" + ("report".equals(activePage) ? " active" : "") + "'>Reports</a></li>" +
                 "    </ul>" +
