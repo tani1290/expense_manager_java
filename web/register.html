@@ -10,7 +10,7 @@
             const error = new URLSearchParams(window.location.search).get('error');
             if (!error) return;
             const msg = document.createElement('div');
-            msg.className = 'error';
+            msg.className = 'alert alert-error';
             const errors = {
                 'MissingFields': 'Please fill in all fields.',
                 'InvalidUsername': 'Username must be 3-20 characters (letters, numbers, underscores).',
@@ -20,35 +20,41 @@
                 'RegistrationFailed': 'Registration failed. Please try again.'
             };
             msg.textContent = errors[error] || 'An error occurred.';
-            document.querySelector('.login-container').prepend(msg);
+            document.querySelector('.auth-card h2').after(msg);
         }
     </script>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Create Account</h2>
-        <form action="register" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="3-20 characters" minlength="3" maxlength="20">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8l-2 4h12z"/></svg>
+                Expense Manager
             </div>
+            <h2>Create Account</h2>
+            <form action="register" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="3-20 characters" minlength="3" maxlength="20">
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="your@email.com">
-            </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="At least 4 characters" minlength="4">
-            </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="At least 4 characters" minlength="4">
+                </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-block btn-success">Create Account</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-success">Create Account</button>
+                </div>
+            </form>
+            <div class="mt-2 text-center" style="text-align: center;">
+                <a href="login.html">Already have an account? Sign in</a>
             </div>
-        </form>
-        <div class="mt-2 text-center">
-            <a href="login.html">Already have an account? Sign in</a>
         </div>
     </div>
 </body>

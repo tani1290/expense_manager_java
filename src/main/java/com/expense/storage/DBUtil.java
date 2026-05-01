@@ -36,8 +36,17 @@ public class DBUtil {
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "username VARCHAR(50) NOT NULL UNIQUE, " +
                     "password VARCHAR(255) NOT NULL, " +
-                    "email VARCHAR(100) NOT NULL UNIQUE)";
+                    "email VARCHAR(100) NOT NULL UNIQUE, " +
+                    "full_name VARCHAR(100), " +
+                    "phone VARCHAR(20))";
             stmt.execute(createUsers);
+
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN full_name VARCHAR(100)");
+            } catch (SQLException ignored) {}
+            try {
+                stmt.execute("ALTER TABLE users ADD COLUMN phone VARCHAR(20)");
+            } catch (SQLException ignored) {}
 
             String createExpenses = "CREATE TABLE IF NOT EXISTS expenses (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -65,9 +74,9 @@ public class DBUtil {
 
             String hashedPassword = BCrypt.hashpw("demo123", BCrypt.gensalt());
 
-            stmt.execute("INSERT INTO users (username, password, email) VALUES " +
-                    "('demo', '" + hashedPassword + "', 'demo@expensetracker.com'), " +
-                    "('john', '" + hashedPassword + "', 'john@example.com')");
+            stmt.execute("INSERT INTO users (username, password, email, full_name, phone) VALUES " +
+                    "('demo', '" + hashedPassword + "', 'demo@expensetracker.com', 'Demo User', '+91 9876543210'), " +
+                    "('john', '" + hashedPassword + "', 'john@example.com', 'John Doe', '+91 9876543211')");
 
             stmt.execute("INSERT INTO expenses (user_id, title, amount, category, date, description) VALUES " +
                     "(1, 'Grocery Shopping', 2500.00, 'Food', '2026-05-01', 'Monthly grocery run at Big Bazaar'), " +

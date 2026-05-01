@@ -5,7 +5,10 @@ import com.expense.model.Expense;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ExpenseStorageJDBC {
 
@@ -125,6 +128,94 @@ public class ExpenseStorageJDBC {
         return 0.0;
     }
 
+    public double getTotalThisMonth(int userId) {
+        String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE user_id = ? AND MONTH(date) = MONTH(CURRENT_DATE) AND YEAR(date) = YEAR(CURRENT_DATE)";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public double getTotalToday(int userId) {
+        String sql = "SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE user_id = ? AND date = CURRENT_DATE";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public Map<String, Double> getCategoryTotals(int userId) {
+        Map<String, Double> totals = new LinkedHashMap<>();
+        String sql = "SELECT category, SUM(amount) as total FROM expenses WHERE user_id = ? GROUP BY category ORDER BY total DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    totals.put(rs.getString("category"), rs.getDouble("total"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totals;
+    }
+
+    public int getExpenseCount(int userId) {
+        String sql = "SELECT COUNT(*) as cnt FROM expenses WHERE user_id = ?";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("cnt");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Expense> getRecentExpenses(int userId, int limit) {
+        List<Expense> expenses = new ArrayList<>();
+        String sql = "SELECT * FROM expenses WHERE user_id = ? ORDER BY date DESC LIMIT ?";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, limit);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    expenses.add(mapExpense(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return expenses;
+    }
+
     public List<Expense> getExpensesByMonth(int userId, int year, int month) {
         List<Expense> expenses = new ArrayList<>();
         String sql = "SELECT * FROM expenses WHERE user_id = ? AND YEAR(date) = ? AND MONTH(date) = ? ORDER BY date DESC";
@@ -134,6 +225,44 @@ public class ExpenseStorageJDBC {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, year);
             pstmt.setInt(3, month);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    expenses.add(mapExpense(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return expenses;
+    }
+
+    public List<Expense> filterByCategory(int userId, String category) {
+        List<Expense> expenses = new ArrayList<>();
+        String sql = "SELECT * FROM expenses WHERE user_id = ? AND category = ? ORDER BY date DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, category);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    expenses.add(mapExpense(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return expenses;
+    }
+
+    public List<Expense> filterByDate(int userId, LocalDate date) {
+        List<Expense> expenses = new ArrayList<>();
+        String sql = "SELECT * FROM expenses WHERE user_id = ? AND date = ? ORDER BY date DESC";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setDate(2, Date.valueOf(date));
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     expenses.add(mapExpense(rs));

@@ -62,10 +62,10 @@ public class ReportServlet extends HttpServlet {
             return;
         }
 
-        generateHTMLReport(resp, yearMonth, categoryTotals, dailyTotals, expenses);
+        generateHTMLReport(resp, user, yearMonth, categoryTotals, dailyTotals, expenses);
     }
 
-    private void generateHTMLReport(HttpServletResponse resp, YearMonth yearMonth,
+    private void generateHTMLReport(HttpServletResponse resp, User user, YearMonth yearMonth,
             Map<String, Double> categoryTotals,
             Map<LocalDate, Double> dailyTotals,
             List<Expense> expenses) throws IOException {
@@ -80,30 +80,33 @@ public class ReportServlet extends HttpServlet {
         String colorsJson = generateChartColors(categoryTotals.size());
         String dailyChartData = toDailyChartData(dailyTotals);
 
+        String avatarLetter = (user.getFullName() != null && !user.getFullName().isEmpty() ? user.getFullName() : user.getUsername()).substring(0, 1).toUpperCase();
+        String displayName = user.getFullName() != null && !user.getFullName().isEmpty() ? user.getFullName() : user.getUsername();
+
         out.println("<!DOCTYPE html>");
-        out.println("<html>");
+        out.println("<html lang='en'>");
         out.println("<head>");
-        out.println("    <title>Expense Report - " + monthName + "</title>");
+        out.println("    <meta charset='UTF-8'>");
+        out.println("    <meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+        out.println("    <title>Report - Expense Manager</title>");
         out.println("    <link rel='stylesheet' href='css/styles.css'>");
-        out.println("    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>");
+        out.println("    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'></script>");
         out.println("</head>");
         out.println("<body>");
-        out.println("    <div class='report-container'>");
-        out.println("        <aside class='report-sidebar'>");
-        out.println("            <h2>Filters & Actions</h2>");
-        out.println("            <form method='get' action='report' class='inline-form'>");
-        out.println("                <input type='month' name='month' value='" + monthParam + "'>");
-        out.println("                <button type='submit' class='btn btn-primary'>Update</button>");
-        out.println("            </form>");
-        out.println("            <a href='report?month=" + monthParam + "&format=csv' class='btn btn-secondary mt-2'>Download CSV</a>");
-        out.println("        </aside>");
+        out.println(navbarHTML(user, avatarLetter, displayName, "report"));
+        out.println("    <div class='page-container'>");
+        out.println("        <div class='page-header'>");
+        out.println("            <h1>Monthly Report</h1>");
+        out.println("            <p>" + monthName + "</p>");
+        out.println("        </div>");
 
-        out.println("        <main class='report-main'>");
-        out.println("            <div class='report-header'>");
-        out.println("                <div>");
-        out.println("                    <h1 class='report-title'>Monthly Report</h1>");
-        out.println("                    <p class='report-month'>" + monthName + "</p>");
-        out.println("                </div>");
+        out.println("        <div class='card-panel'>");
+        out.println("            <div style='display:flex; gap:0.75rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1.5rem;'>");
+        out.println("                <form method='get' action='report' style='display:flex; gap:0.5rem; flex:1;'>");
+        out.println("                    <input type='month' name='month' value='" + monthParam + "' style='flex:1;'>");
+        out.println("                    <button type='submit' class='btn'>Update</button>");
+        out.println("                </form>");
+        out.println("                <a href='report?month=" + monthParam + "&format=csv' class='btn btn-outline'>Download CSV</a>");
         out.println("            </div>");
 
         if (expenses.isEmpty()) {
@@ -112,34 +115,41 @@ public class ReportServlet extends HttpServlet {
             out.println("            </div>");
         } else {
             double totalSpending = categoryTotals.values().stream().mapToDouble(Double::doubleValue).sum();
-            out.println("            <div class='summary-cards'>");
-            out.println("                <div class='summary-card'>");
-            out.println("                    <h3>Total Spending</h3>");
-            out.println("                    <p>Rs. " + String.format("%.2f", totalSpending) + "</p>");
+            out.println("            <div class='dashboard-tiles'>");
+            out.println("                <div class='tile'>");
+            out.println("                    <div class='tile-header'><div class='tile-icon blue'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg></div></div>");
+            out.println("                    <div class='tile-value'>Rs. " + String.format("%.2f", totalSpending) + "</div>");
+            out.println("                    <div class='tile-label'>Total Spending</div>");
             out.println("                </div>");
-            out.println("                <div class='summary-card'>");
-            out.println("                    <h3>Categories</h3>");
-            out.println("                    <p>" + categoryTotals.size() + "</p>");
+            out.println("                <div class='tile'>");
+            out.println("                    <div class='tile-header'><div class='tile-icon green'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M21.21 15.89A10 10 0 1 1 8 2.83'/><path d='M22 12A10 10 0 0 0 12 2v10z'/></svg></div></div>");
+            out.println("                    <div class='tile-value'>" + categoryTotals.size() + "</div>");
+            out.println("                    <div class='tile-label'>Categories</div>");
             out.println("                </div>");
-            out.println("                <div class='summary-card'>");
-            out.println("                    <h3>Transactions</h3>");
-            out.println("                    <p>" + expenses.size() + "</p>");
+            out.println("                <div class='tile'>");
+            out.println("                    <div class='tile-header'><div class='tile-icon purple'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/></svg></div></div>");
+            out.println("                    <div class='tile-value'>" + expenses.size() + "</div>");
+            out.println("                    <div class='tile-label'>Transactions</div>");
+            out.println("                </div>");
+            out.println("                <div class='tile'>");
+            out.println("                    <div class='tile-header'><div class='tile-icon orange'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg></div></div>");
+            out.println("                    <div class='tile-value'>Rs. " + String.format("%.2f", (totalSpending / expenses.size())) + "</div>");
+            out.println("                    <div class='tile-label'>Avg per Transaction</div>");
             out.println("                </div>");
             out.println("            </div>");
 
-            out.println("            <div class='chart-container'>");
-            out.println("                <h2>Category Breakdown</h2>");
-            out.println("                <canvas id='categoryChart'></canvas>");
+            out.println("            <div class='grid-2' style='margin-top:1.5rem;'>");
+            out.println("                <div>");
+            out.println("                    <canvas id='categoryChart'></canvas>");
+            out.println("                </div>");
+            out.println("                <div>");
+            out.println("                    <canvas id='dailyChart'></canvas>");
+            out.println("                </div>");
             out.println("            </div>");
 
-            out.println("            <div class='chart-container'>");
-            out.println("                <h2>Daily Spending</h2>");
-            out.println("                <canvas id='dailyChart'></canvas>");
-            out.println("            </div>");
-
-            out.println("            <div class='category-breakdown'>");
-            out.println("                <h2>Category Details</h2>");
-            out.println("                <table class='category-table'>");
+            out.println("            <div style='margin-top:1.5rem;'>");
+            out.println("                <h2 style='font-size:1.1rem; margin-bottom:1rem;'>Category Details</h2>");
+            out.println("                <table>");
             out.println("                    <thead><tr><th>Category</th><th>Amount</th><th>Percentage</th></tr></thead>");
             out.println("                    <tbody>");
             categoryTotals.entrySet().stream()
@@ -148,7 +158,7 @@ public class ReportServlet extends HttpServlet {
                         double percentage = (entry.getValue() / totalSpending) * 100;
                         out.println("                    <tr>");
                         out.println("                        <td>" + entry.getKey() + "</td>");
-                        out.println("                        <td>Rs. " + String.format("%.2f", entry.getValue()) + "</td>");
+                        out.println("                        <td><strong>Rs. " + String.format("%.2f", entry.getValue()) + "</strong></td>");
                         out.println("                        <td>" + String.format("%.1f", percentage) + "%</td>");
                         out.println("                    </tr>");
                     });
@@ -157,11 +167,7 @@ public class ReportServlet extends HttpServlet {
             out.println("            </div>");
         }
 
-        out.println("            <div class='navigation-links'>");
-        out.println("                <a href='viewExpenses' class='nav-link'>Back to Expenses</a>");
-        out.println("                <a href='logout' class='nav-link logout'>Logout</a>");
-        out.println("            </div>");
-        out.println("        </main>");
+        out.println("        </div>");
         out.println("    </div>");
 
         if (!expenses.isEmpty()) {
@@ -181,8 +187,9 @@ public class ReportServlet extends HttpServlet {
             out.println("        },");
             out.println("        options: {");
             out.println("            responsive: true,");
+            out.println("            maintainAspectRatio: false,");
             out.println("            plugins: {");
-            out.println("                legend: { position: 'right' },");
+            out.println("                legend: { position: 'bottom' },");
             out.println("                tooltip: {");
             out.println("                    callbacks: {");
             out.println("                        label: function(context) {");
@@ -208,12 +215,12 @@ public class ReportServlet extends HttpServlet {
             out.println("                label: 'Daily Spending',");
             out.println("                data: dailyData.amounts,");
             out.println("                backgroundColor: '#059669',");
-            out.println("                borderColor: '#047857',");
             out.println("                borderWidth: 1");
             out.println("            }]");
             out.println("        },");
             out.println("        options: {");
             out.println("            responsive: true,");
+            out.println("            maintainAspectRatio: false,");
             out.println("            scales: {");
             out.println("                y: {");
             out.println("                    beginAtZero: true,");
@@ -235,6 +242,42 @@ public class ReportServlet extends HttpServlet {
 
         out.println("</body>");
         out.println("</html>");
+    }
+
+    private String navbarHTML(User user, String avatarLetter, String displayName, String activePage) {
+        return "<nav class='navbar'>" +
+                "    <a href='dashboard' class='navbar-brand'>" +
+                "        <svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 3h-8l-2 4h12z'/></svg>" +
+                "        Expense Manager" +
+                "    </a>" +
+                "    <button class='mobile-toggle' onclick=\"document.querySelector('.navbar-nav').classList.toggle('open')\" aria-label='Toggle menu'>" +
+                "        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='18' x2='21' y2='18'/></svg>" +
+                "    </button>" +
+                "    <ul class='navbar-nav'>" +
+                "        <li><a href='dashboard' class='nav-link" + ("dashboard".equals(activePage) ? " active" : "") + "'>Dashboard</a></li>" +
+                "        <li><a href='addExpense.html' class='nav-link" + ("addExpense".equals(activePage) ? " active" : "") + "'>Add Expense</a></li>" +
+                "        <li><a href='viewExpenses' class='nav-link" + ("viewExpenses".equals(activePage) ? " active" : "") + "'>Expenses</a></li>" +
+                "        <li><a href='report' class='nav-link" + ("report".equals(activePage) ? " active" : "") + "'>Reports</a></li>" +
+                "    </ul>" +
+                "    <div class='navbar-right'>" +
+                "        <button class='theme-toggle' onclick='toggleTheme()' aria-label='Toggle dark mode'>" +
+                "            <svg id='sunIcon' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='5'/><line x1='12' y1='1' x2='12' y2='3'/><line x1='12' y1='21' x2='12' y2='23'/><line x1='4.22' y1='4.22' x2='5.64' y2='5.64'/><line x1='18.36' y1='18.36' x2='19.78' y2='19.78'/><line x1='1' y1='12' x2='3' y2='12'/><line x1='21' y1='12' x2='23' y2='12'/><line x1='4.22' y1='19.78' x2='5.64' y2='18.36'/><line x1='18.36' y1='5.64' x2='19.78' y2='4.22'/></svg>" +
+                "            <svg id='moonIcon' style='display:none' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'/></svg>" +
+                "        </button>" +
+                "        <a href='profile' class='nav-user'>" +
+                "            <div class='avatar'>" + avatarLetter + "</div>" +
+                "            <div class='nav-user-info'>" +
+                "                <span class='nav-user-name'>" + displayName + "</span>" +
+                "                <span class='nav-user-role'>@" + user.getUsername() + "</span>" +
+                "            </div>" +
+                "        </a>" +
+                "    </div>" +
+                "</nav>" +
+                "<script>" +
+                "function toggleTheme() { const html=document.documentElement; const isDark=html.getAttribute('data-theme')==='dark'; html.setAttribute('data-theme',isDark?'light':'dark'); localStorage.setItem('theme',isDark?'light':'dark'); updateThemeIcons(!isDark); }" +
+                "function updateThemeIcons(isDark) { document.getElementById('sunIcon').style.display=isDark?'none':'block'; document.getElementById('moonIcon').style.display=isDark?'block':'none'; }" +
+                "(function(){ const saved=localStorage.getItem('theme'); const isDark=saved==='dark'||(!saved&&window.matchMedia('(prefers-color-scheme:dark)').matches); if(isDark)document.documentElement.setAttribute('data-theme','dark'); updateThemeIcons(isDark); })();" +
+                "</script>";
     }
 
     private void generateCSVReport(HttpServletResponse resp, YearMonth yearMonth,

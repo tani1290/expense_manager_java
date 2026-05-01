@@ -8,18 +8,18 @@
     <script>
         window.onload = function () {
             const params = new URLSearchParams(window.location.search);
-            const container = document.querySelector('.login-container');
+            const container = document.querySelector('.auth-card');
             const errors = {
-                'InvalidCredentials': ['Invalid username or password.', 'error'],
-                'MissingFields': ['Please fill in all fields.', 'error'],
-                'registered': ['Registration successful! Please login.', 'success']
+                'InvalidCredentials': ['Invalid username or password.', 'alert-error'],
+                'MissingFields': ['Please fill in all fields.', 'alert-error'],
+                'registered': ['Registration successful! Please login.', 'alert-success']
             };
             for (const [key, val] of Object.entries(errors)) {
                 if (params.get(key) === 'true' || params.get('error') === key) {
                     const msg = document.createElement('div');
-                    msg.className = val[1];
+                    msg.className = 'alert ' + val[1];
                     msg.textContent = val[0];
-                    container.prepend(msg);
+                    container.querySelector('h2').after(msg);
                     break;
                 }
             }
@@ -27,28 +27,34 @@
     </script>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Sign In</h2>
-        <form action="login" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Enter your username">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8l-2 4h12z"/></svg>
+                Expense Manager
             </div>
+            <h2>Sign In</h2>
+            <form action="login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
-            </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-block">Sign In</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block">Sign In</button>
+                </div>
+            </form>
+            <div class="mt-2 text-center" style="text-align: center;">
+                <a href="register.html">Don't have an account? Create one</a>
             </div>
-        </form>
-        <div class="mt-2 text-center">
-            <a href="register.html">Don't have an account? Create one</a>
-        </div>
-        <div class="mt-2 text-center" style="padding: 0.75rem; background: var(--primary-bg); border-radius: 8px; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-            <strong>Demo:</strong> Username: <code>demo</code> | Password: <code>demo123</code>
+            <div style="padding: 0.75rem; background: var(--primary-bg); border-radius: var(--radius-sm); margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                <strong>Demo:</strong> Username: <code>demo</code> | Password: <code>demo123</code>
+            </div>
         </div>
     </div>
 </body>

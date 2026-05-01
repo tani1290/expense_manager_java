@@ -5,6 +5,8 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String fullName;
+    private String phone;
 
     public User() {
     }
@@ -13,6 +15,8 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.fullName = "";
+        this.phone = "";
     }
 
     public User(int id, String username, String password, String email) {
@@ -20,6 +24,17 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.fullName = "";
+        this.phone = "";
+    }
+
+    public User(int id, String username, String password, String email, String fullName, String phone) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.fullName = fullName != null ? fullName : "";
+        this.phone = phone != null ? phone : "";
     }
 
     public int getId() {
@@ -52,5 +67,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

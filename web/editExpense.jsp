@@ -9,53 +9,60 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Edit Expense</h2>
+    <jsp:include page="navbar.jsp"/>
+
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Edit Expense</h1>
+            <p>Update expense details</p>
+        </div>
 
         <c:if test="${param.error == 'InvalidInput' || param.error == 'InvalidDate'}">
-            <div class="error">Please check your input and try again.</div>
+            <div class="alert alert-error">Please check your input and try again.</div>
         </c:if>
 
-        <form action="updateExpense" method="post">
-            <input type="hidden" name="id" value="${expense.id}">
+        <div class="card-panel" style="max-width: 600px;">
+            <form action="updateExpense" method="post">
+                <input type="hidden" name="id" value="${expense.id}">
 
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" value="${expense.title}" required>
-            </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" value="${expense.title}" required>
+                </div>
 
-            <div class="form-group">
-                <label for="amount">Amount (Rs.)</label>
-                <input type="number" id="amount" name="amount" value="${expense.amount}" step="0.01" min="0.01" required>
-            </div>
+                <div class="form-group">
+                    <label for="amount">Amount (Rs.)</label>
+                    <input type="number" id="amount" name="amount" value="${expense.amount}" step="0.01" min="0.01" required>
+                </div>
 
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select id="category" name="category">
-                    <option value="Food" ${expense.category == 'Food' ? 'selected' : ''}>Food</option>
-                    <option value="Transport" ${expense.category == 'Transport' ? 'selected' : ''}>Transport</option>
-                    <option value="Utilities" ${expense.category == 'Utilities' ? 'selected' : ''}>Utilities</option>
-                    <option value="Entertainment" ${expense.category == 'Entertainment' ? 'selected' : ''}>Entertainment</option>
-                    <option value="Health" ${expense.category == 'Health' ? 'selected' : ''}>Health</option>
-                    <option value="Other" ${expense.category == 'Other' ? 'selected' : ''}>Other</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option value="Food" ${expense.category == 'Food' ? 'selected' : ''}>Food</option>
+                        <option value="Transport" ${expense.category == 'Transport' ? 'selected' : ''}>Transport</option>
+                        <option value="Utilities" ${expense.category == 'Utilities' ? 'selected' : ''}>Utilities</option>
+                        <option value="Entertainment" ${expense.category == 'Entertainment' ? 'selected' : ''}>Entertainment</option>
+                        <option value="Health" ${expense.category == 'Health' ? 'selected' : ''}>Health</option>
+                        <option value="Other" ${expense.category == 'Other' ? 'selected' : ''}>Other</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="date">Date</label>
-                <input type="date" id="date" name="date" value="${expense.date}" required>
-            </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" value="${expense.date}" required>
+                </div>
 
-            <div class="form-group">
-                <label for="description">Description (optional)</label>
-                <input type="text" id="description" name="description" value="${expense.description != null ? expense.description : ''}" placeholder="Additional notes...">
-            </div>
+                <div class="form-group">
+                    <label for="description">Description (optional)</label>
+                    <input type="text" id="description" name="description" value="${expense.description != null ? expense.description : ''}" placeholder="Additional notes...">
+                </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-block">Update Expense</button>
-                <a href="viewExpenses" class="btn btn-block btn-warning mt-1">Cancel</a>
-            </div>
-        </form>
+                <div class="action-bar">
+                    <button type="submit" class="btn">Update Expense</button>
+                    <a href="viewExpenses" class="btn btn-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
