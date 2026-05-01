@@ -216,6 +216,23 @@ public class ExpenseStorageJDBC {
         return expenses;
     }
 
+    public List<String> getCategoriesByUserId(int userId) {
+        List<String> categories = new ArrayList<>();
+        String sql = "SELECT DISTINCT category FROM expenses WHERE user_id = ? ORDER BY category";
+        try (Connection conn = DBUtil.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    categories.add(rs.getString("category"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
     public List<Expense> getExpensesByMonth(int userId, int year, int month) {
         List<Expense> expenses = new ArrayList<>();
         String sql = "SELECT * FROM expenses WHERE user_id = ? AND YEAR(date) = ? AND MONTH(date) = ? ORDER BY date DESC";

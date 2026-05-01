@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/editExpense")
 public class EditExpenseServlet extends HttpServlet {
@@ -32,7 +33,9 @@ public class EditExpenseServlet extends HttpServlet {
             Expense expense = expenseStorage.getExpenseById(id);
 
             if (expense != null && expense.getUserId() == user.getId()) {
+                List<String> categories = expenseStorage.getCategoriesByUserId(user.getId());
                 req.setAttribute("expense", expense);
+                req.setAttribute("categories", categories);
                 req.getRequestDispatcher("editExpense.jsp").forward(req, resp);
             } else {
                 resp.sendRedirect(req.getContextPath() + "/viewExpenses?error=NotFound");

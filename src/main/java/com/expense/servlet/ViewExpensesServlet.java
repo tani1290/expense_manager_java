@@ -57,11 +57,13 @@ public class ViewExpensesServlet extends HttpServlet {
         }
 
         double total = expenseStorage.getTotalByUserId(user.getId());
+        List<String> categories = expenseStorage.getCategoriesByUserId(user.getId());
 
         req.setAttribute("expenses", expenses);
         req.setAttribute("total", total);
         req.setAttribute("filterType", filterType);
         req.setAttribute("filterValue", filterValue);
+        req.setAttribute("categories", categories);
         req.getRequestDispatcher("viewExpenses.jsp").forward(req, resp);
     }
 }

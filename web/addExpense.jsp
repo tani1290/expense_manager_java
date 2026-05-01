@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +24,24 @@
                 msg.textContent = errors[error] || 'An error occurred. Please try again.';
                 document.querySelector('.page-container').prepend(msg);
             }
+
+            const catSelect = document.getElementById('categorySelect');
+            const catCustom = document.getElementById('categoryCustom');
+            const catHidden = document.getElementById('category');
+
+            catSelect.addEventListener('change', function() {
+                if (this.value === '__custom__') {
+                    catCustom.style.display = 'block';
+                    catCustom.focus();
+                } else {
+                    catCustom.style.display = 'none';
+                    catHidden.value = this.value;
+                }
+            });
+
+            catCustom.addEventListener('input', function() {
+                catHidden.value = this.value;
+            });
         }
     </script>
 </head>
@@ -47,15 +67,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="category">Category</label>
-                    <select id="category" name="category">
+                    <label>Category</label>
+                    <select id="categorySelect" style="width: 100%;">
                         <option value="Food">Food</option>
                         <option value="Transport">Transport</option>
                         <option value="Utilities">Utilities</option>
                         <option value="Entertainment">Entertainment</option>
                         <option value="Health">Health</option>
                         <option value="Other">Other</option>
+                        <option value="__custom__">+ Create Custom Category</option>
                     </select>
+                    <input type="text" id="categoryCustom" placeholder="Enter custom category name" style="width: 100%; margin-top: 0.5rem; display: none;">
+                    <input type="hidden" id="category" name="category" value="Food">
                 </div>
 
                 <div class="form-group">
