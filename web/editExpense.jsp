@@ -6,20 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Expense - Expense Manager</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
         <h2>Edit Expense</h2>
 
-        <c:if test="${param.error == 'InvalidInput'}">
-            <div class="error">Please enter valid values for all fields.</div>
-        </c:if>
-        <c:if test="${param.error == 'InvalidDate'}">
-            <div class="error">Please enter a valid date.</div>
+        <c:if test="${param.error == 'InvalidInput' || param.error == 'InvalidDate'}">
+            <div class="error">Please check your input and try again.</div>
         </c:if>
 
-        <form action="${pageContext.request.contextPath}/updateExpense" method="post" class="login-form">
+        <form action="updateExpense" method="post">
             <input type="hidden" name="id" value="${expense.id}">
 
             <div class="form-group">
@@ -28,7 +25,7 @@
             </div>
 
             <div class="form-group">
-                <label for="amount">Amount ($)</label>
+                <label for="amount">Amount (Rs.)</label>
                 <input type="number" id="amount" name="amount" value="${expense.amount}" step="0.01" min="0.01" required>
             </div>
 
@@ -56,7 +53,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-block">Update Expense</button>
-                <a href="${pageContext.request.contextPath}/viewExpenses" class="btn btn-secondary btn-block mt-1">Cancel</a>
+                <a href="viewExpenses" class="btn btn-block btn-warning mt-1">Cancel</a>
             </div>
         </form>
     </div>

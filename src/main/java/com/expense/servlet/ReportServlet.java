@@ -115,7 +115,7 @@ public class ReportServlet extends HttpServlet {
             out.println("            <div class='summary-cards'>");
             out.println("                <div class='summary-card'>");
             out.println("                    <h3>Total Spending</h3>");
-            out.println("                    <p>$" + String.format("%.2f", totalSpending) + "</p>");
+            out.println("                    <p>Rs. " + String.format("%.2f", totalSpending) + "</p>");
             out.println("                </div>");
             out.println("                <div class='summary-card'>");
             out.println("                    <h3>Categories</h3>");
@@ -148,7 +148,7 @@ public class ReportServlet extends HttpServlet {
                         double percentage = (entry.getValue() / totalSpending) * 100;
                         out.println("                    <tr>");
                         out.println("                        <td>" + entry.getKey() + "</td>");
-                        out.println("                        <td>$" + String.format("%.2f", entry.getValue()) + "</td>");
+                        out.println("                        <td>Rs. " + String.format("%.2f", entry.getValue()) + "</td>");
                         out.println("                        <td>" + String.format("%.1f", percentage) + "%</td>");
                         out.println("                    </tr>");
                     });
@@ -190,7 +190,7 @@ public class ReportServlet extends HttpServlet {
             out.println("                            const value = context.raw || 0;");
             out.println("                            const total = context.dataset.data.reduce((a, b) => a + b, 0);");
             out.println("                            const percentage = Math.round((value / total) * 100);");
-            out.println("                            return `${label}: $${value.toFixed(2)} (${percentage}%)`;");
+            out.println("                            return `${label}: Rs. ${value.toFixed(2)} (${percentage}%)`;");
             out.println("                        }");
             out.println("                    }");
             out.println("                }");
@@ -207,8 +207,8 @@ public class ReportServlet extends HttpServlet {
             out.println("            datasets: [{");
             out.println("                label: 'Daily Spending',");
             out.println("                data: dailyData.amounts,");
-            out.println("                backgroundColor: '#4CAF50',");
-            out.println("                borderColor: '#388E3C',");
+            out.println("                backgroundColor: '#059669',");
+            out.println("                borderColor: '#047857',");
             out.println("                borderWidth: 1");
             out.println("            }]");
             out.println("        },");
@@ -217,13 +217,13 @@ public class ReportServlet extends HttpServlet {
             out.println("            scales: {");
             out.println("                y: {");
             out.println("                    beginAtZero: true,");
-            out.println("                    ticks: { callback: function(value) { return '$' + value.toFixed(2); } }");
+            out.println("                    ticks: { callback: function(value) { return 'Rs. ' + value.toFixed(2); } }");
             out.println("                }");
             out.println("            },");
             out.println("            plugins: {");
             out.println("                tooltip: {");
             out.println("                    callbacks: {");
-            out.println("                        label: function(context) { return '$' + context.raw.toFixed(2); }");
+            out.println("                        label: function(context) { return 'Rs. ' + context.raw.toFixed(2); }");
             out.println("                    }");
             out.println("                }");
             out.println("            }");
@@ -266,8 +266,8 @@ public class ReportServlet extends HttpServlet {
     }
 
     private String generateChartColors(int count) {
-        String[] colors = {"'#4CAF50'", "'#2196F3'", "'#FFC107'", "'#FF5722'", "'#9C27B0'",
-                "'#607D8B'", "'#795548'", "'#3F51B5'", "'#00BCD4'", "'#8BC34A'"};
+        String[] colors = {"'#2563EB'", "'#059669'", "'#DC2626'", "'#7C3AED'", "'#EA580C'",
+                "'#0891B2'", "'#4F46E5'", "'#BE185D'", "'#65A30D'", "'#CA8A04'"};
         List<String> result = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             result.add(colors[i % colors.length]);

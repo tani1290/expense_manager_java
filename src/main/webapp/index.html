@@ -3,215 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Manager | Welcome</title>
+    <title>Expense Manager</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+        body { background: var(--primary-bg); }
 
-        .welcome-container {
-            max-width: 900px;
-            margin: 3rem auto;
+        .hero {
+            max-width: 800px;
+            margin: 4rem auto;
             padding: 0 1.5rem;
-            text-align: center;
-            animation: fadeIn 0.6s ease-out;
         }
 
-        .welcome-message {
-            background: var(--card-bg);
+        .hero-card {
+            background: var(--white);
             padding: 3rem 2rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow-2);
-            margin-bottom: 2.5rem;
-            position: relative;
-            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border-top: 4px solid var(--primary);
         }
 
-        .welcome-message::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+        .hero-card h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text);
+            border: none;
+            padding: 0;
+            margin: 0 0 0.5rem;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 400;
-            margin-bottom: 0.75rem;
-            color: var(--primary-dark);
+        .hero-card .tagline {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
         }
 
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-actions .btn {
+            min-width: 140px;
+            padding: 0.75rem 1.5rem;
         }
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
         }
 
-        .feature-card {
-            background: var(--card-bg);
-            padding: 2rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-1);
-            transition: all 0.3s ease;
+        .feature {
+            background: var(--white);
+            padding: 1.75rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature:nth-child(2) { border-left-color: var(--success); }
+        .feature:nth-child(3) { border-left-color: var(--accent); }
+
+        .feature h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            border: none;
+            padding: 0;
+            margin: 0 0 0.5rem;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .redirect-msg {
             text-align: center;
-            border-top: 4px solid var(--primary-color);
-        }
-
-        .feature-card:nth-child(2) { border-top-color: var(--secondary-color); }
-        .feature-card:nth-child(3) { border-top-color: var(--accent-color); }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-2);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            border-radius: 50%;
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-        }
-
-        .feature-card:nth-child(2) .feature-icon {
-            background-color: rgba(52, 168, 83, 0.1);
-            color: var(--secondary-color);
-        }
-
-        .feature-card:nth-child(3) .feature-icon {
-            background-color: rgba(251, 188, 5, 0.1);
-            color: var(--accent-color);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .redirect-message {
-            margin: 3rem 0;
-            padding: 1.5rem;
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: var(--shadow-1);
-        }
-
-        .redirect-message p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .btn-link {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 2px rgba(66, 133, 244, 0.3);
-        }
-
-        .btn-link:hover {
-            background: var(--primary-dark);
-            text-decoration: none;
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         .spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(66, 133, 244, 0.3);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--primary);
             border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s ease-in-out infinite;
-            margin-top: 1rem;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-left: 0.5rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .welcome-container { margin: 2rem auto; }
-            h1 { font-size: 2rem; }
-            .features { grid-template-columns: 1fr; }
+        @media (max-width: 600px) {
+            .hero { margin: 2rem auto; }
+            .hero-card { padding: 2rem 1.25rem; }
+            .hero-card h1 { font-size: 1.75rem; }
+            .hero-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <div class="welcome-message">
-            <h1>Welcome to Expense Manager</h1>
-            <p class="subtitle">Your personal finance companion</p>
-            <p>Track, manage, and analyze your expenses effortlessly</p>
-        </div>
+    <div class="hero">
+        <div class="hero-card">
+            <h1>Expense Manager</h1>
+            <p class="tagline">Track, manage, and analyze your spending effortlessly</p>
 
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">&#128202;</div>
-                <h3>Expense Tracking</h3>
-                <p>Record and categorize your daily expenses with our intuitive interface</p>
+            <div class="hero-actions">
+                <a href="login.html" class="btn">Login</a>
+                <a href="register.html" class="btn btn-success">Register</a>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">&#128197;</div>
-                <h3>Monthly Reports</h3>
-                <p>Get detailed visual insights into your spending patterns and trends</p>
+            <div class="features">
+                <div class="feature">
+                    <h3>Expense Tracking</h3>
+                    <p>Record and categorize your daily expenses with ease</p>
+                </div>
+                <div class="feature">
+                    <h3>Monthly Reports</h3>
+                    <p>Visual charts and insights into your spending patterns</p>
+                </div>
+                <div class="feature">
+                    <h3>Secure & Private</h3>
+                    <p>Your data is protected with encrypted password storage</p>
+                </div>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">&#128274;</div>
-                <h3>Secure Storage</h3>
-                <p>Your financial data is protected with industry-standard security</p>
+            <div class="redirect-msg">
+                Redirecting to login... <span class="spinner"></span>
             </div>
-        </div>
-
-        <div class="redirect-message">
-            <p>You'll be redirected to the login page in a moment...</p>
-            <p>If not, <a href="login.html" class="btn-link">Continue to Login</a></p>
-            <div class="spinner"></div>
         </div>
     </div>
 
     <script>
-        setTimeout(function() {
-            window.location.href = "login.html";
-        }, 5000);
+        setTimeout(function() { window.location.href = "login.html"; }, 5000);
     </script>
 </body>
 </html>
