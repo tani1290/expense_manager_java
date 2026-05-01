@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Expense Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error) {
+                const msg = document.createElement('div');
+                msg.className = 'error';
+                switch (error) {
+                    case 'MissingFields':
+                        msg.textContent = 'Please fill in all fields.';
+                        break;
+                    case 'InvalidUsername':
+                        msg.textContent = 'Username must be 3-20 characters (letters, numbers, underscores only).';
+                        break;
+                    case 'InvalidEmail':
+                        msg.textContent = 'Please enter a valid email address.';
+                        break;
+                    case 'PasswordTooShort':
+                        msg.textContent = 'Password must be at least 4 characters long.';
+                        break;
+                    case 'UserExists':
+                        msg.textContent = 'Username already exists. Please choose another.';
+                        break;
+                    default:
+                        msg.textContent = 'Registration failed. Please try again.';
+                }
+                document.querySelector('.login-container').prepend(msg);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Create Account</h2>
+        <form action="register" method="post" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="3-20 characters" minlength="3" maxlength="20">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="At least 4 characters" minlength="4">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-block">Register</button>
+            </div>
+        </form>
+        <div class="mt-2 text-center">
+            <a href="login.html">Already have an account? Login here</a>
+        </div>
+    </div>
+</body>
+</html>

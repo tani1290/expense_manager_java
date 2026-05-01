@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Expense Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('registered') === 'true') {
+                const msg = document.createElement('div');
+                msg.className = 'success';
+                msg.textContent = 'Registration successful! Please login.';
+                document.querySelector('.login-container').prepend(msg);
+            }
+            if (urlParams.get('error') === 'InvalidCredentials') {
+                const msg = document.createElement('div');
+                msg.className = 'error';
+                msg.textContent = 'Invalid username or password.';
+                document.querySelector('.login-container').prepend(msg);
+            }
+            if (urlParams.get('error') === 'MissingFields') {
+                const msg = document.createElement('div');
+                msg.className = 'error';
+                msg.textContent = 'Please fill in all fields.';
+                document.querySelector('.login-container').prepend(msg);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="login" method="post" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-block">Login</button>
+            </div>
+        </form>
+        <div class="mt-2 text-center">
+            <a href="register.html">Don't have an account? Register here</a>
+        </div>
+    </div>
+</body>
+</html>

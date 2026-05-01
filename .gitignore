@@ -1,0 +1,8 @@
+*.class
+*.log
+*.mv.db
+.DS_Store
+expense_db*
+target/
+.idea/
+*.iml
