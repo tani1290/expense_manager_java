@@ -1,0 +1,128 @@
+.
+├── build
+│   └── classes
+│       └── com
+│           └── expensemanager
+│               ├── AddExpenseServlet.class
+│               ├── Expense.class
+│               ├── ExpenseStorageJDBC.class
+│               ├── LoginFilter.class
+│               ├── LoginServlet.class
+│               ├── LogoutServlet.class
+│               ├── PasswordHasher.class
+│               ├── RegisterServlet.class
+│               ├── ReportServlet.class
+│               ├── User.class
+│               ├── UserStorageJDBC.class
+│               └── ViewExpensesServlet.class
+├── expense_db.mv.db
+├── expense_db.trace.db
+├── output.txt
+├── pom.xml
+├── README.md
+├── src
+│   └── main
+│       ├── java
+│       │   └── com
+│       │       └── expense
+│       │           ├── model
+│       │           │   ├── Expense.java
+│       │           │   └── User.java
+│       │           ├── servlet
+│       │           │   ├── AddExpenseRedirectServlet.java
+│       │           │   ├── AddExpenseServlet.java
+│       │           │   ├── DashboardServlet.java
+│       │           │   ├── DeleteExpenseServlet.java
+│       │           │   ├── EditExpenseServlet.java
+│       │           │   ├── LoginServlet.java
+│       │           │   ├── LogoutServlet.java
+│       │           │   ├── NavbarServlet.java
+│       │           │   ├── ProfileServlet.java
+│       │           │   ├── RegisterServlet.java
+│       │           │   ├── ReportServlet.java
+│       │           │   ├── UpdateExpenseServlet.java
+│       │           │   └── ViewExpensesServlet.java
+│       │           └── storage
+│       │               ├── DBUtil.java
+│       │               ├── ExpenseStorageJDBC.java
+│       │               └── UserStorageJDBC.java
+│       ├── resources
+│       └── webapp
+│           ├── addExpense.jsp
+│           ├── css
+│           │   └── styles.css
+│           ├── dashboard.jsp
+│           ├── editExpense.jsp
+│           ├── index.html
+│           ├── login.html
+│           ├── navbar.jsp
+│           ├── profile.jsp
+│           ├── register.html
+│           ├── viewExpenses.jsp
+│           └── WEB-INF
+│               ├── lib
+│               └── web.xml
+├── struct.txt
+├── target
+│   ├── classes
+│   │   └── com
+│   │       └── expense
+│   │           ├── model
+│   │           │   ├── Expense.class
+│   │           │   └── User.class
+│   │           ├── servlet
+│   │           │   ├── AddExpenseRedirectServlet.class
+│   │           │   ├── AddExpenseServlet.class
+│   │           │   ├── DashboardServlet.class
+│   │           │   ├── DeleteExpenseServlet.class
+│   │           │   ├── EditExpenseServlet.class
+│   │           │   ├── LoginServlet.class
+│   │           │   ├── LogoutServlet.class
+│   │           │   ├── NavbarServlet.class
+│   │           │   ├── ProfileServlet.class
+│   │           │   ├── RegisterServlet.class
+│   │           │   ├── ReportServlet.class
+│   │           │   ├── UpdateExpenseServlet.class
+│   │           │   └── ViewExpensesServlet.class
+│   │           └── storage
+│   │               ├── DBUtil.class
+│   │               ├── ExpenseStorageJDBC.class
+│   │               └── UserStorageJDBC.class
+│   ├── generated-sources
+│   │   └── annotations
+│   ├── maven-status
+│   │   └── maven-compiler-plugin
+│   │       └── compile
+│   │           └── default-compile
+│   │               ├── createdFiles.lst
+│   │               └── inputFiles.lst
+│   └── tmp
+│       └── jsp
+│           └── org
+│               └── apache
+│                   └── jsp
+│                       ├── addExpense_jsp.class
+│                       ├── addExpense_jsp.java
+│                       ├── editExpense_jsp.class
+│                       ├── editExpense_jsp.java
+│                       ├── navbar_jsp.class
+│                       ├── navbar_jsp.java
+│                       ├── viewExpenses_jsp.class
+│                       └── viewExpenses_jsp.java
+└── web
+    ├── addExpense.jsp
+    ├── css
+    │   └── styles.css
+    ├── dashboard.jsp
+    ├── editExpense.jsp
+    ├── index.html
+    ├── login.html
+    ├── navbar.jsp
+    ├── profile.jsp
+    ├── register.html
+    ├── viewExpenses.jsp
+    └── WEB-INF
+        ├── lib
+        └── web.xml
+
+40 directories, 86 files

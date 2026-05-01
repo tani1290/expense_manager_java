@@ -10,9 +10,9 @@ import java.sql.Statement;
 
 public class DBUtil {
 
-    private static final String URL = "jdbc:h2:./expense_db";
-    private static final String USER = "sa";
-    private static final String PASSWORD = "";
+    private static final String URL = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:h2:/data/expense_db";
+    private static final String USER = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "sa";
+    private static final String PASSWORD = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "";
 
     static {
         try {
